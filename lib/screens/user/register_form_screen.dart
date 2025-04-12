@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -13,10 +14,18 @@ class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitForm() {
+    CollectionReference participant = FirebaseFirestore.instance.collection(
+      'participant ',
+    );
+    participant.add({
+      'name': _nameController.text,
+      'gender': selectedGender,
+      'age': _ageController.text,
+    });
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form submitted successfully!')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Form submitted successfully!')));
     }
   }
 
@@ -63,10 +72,15 @@ class _RegisterFormState extends State<RegisterForm> {
                 border: OutlineInputBorder(),
               ),
               value: selectedGender,
-              items: ['Male', 'Female', 'Prefer not to say']
-                  .map((gender) =>
-                      DropdownMenuItem(value: gender, child: Text(gender)))
-                  .toList(),
+              items:
+                  ['Male', 'Female', 'Prefer not to say']
+                      .map(
+                        (gender) => DropdownMenuItem(
+                          value: gender,
+                          child: Text(gender),
+                        ),
+                      )
+                      .toList(),
               onChanged: (value) {
                 setState(() {
                   selectedGender = value;
