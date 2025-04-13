@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_race_tracker_application/widgets/inputs/button.dart';
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -103,9 +104,10 @@ class _RegisterFormState extends State<RegisterForm> {
 
             SizedBox(height: 24.0),
             Center(
-              child: ElevatedButton(
+              child: Button(
+                text: 'Register',
+                isPrimary: true, // or false for secondary style
                 onPressed: _submitForm,
-                child: Text('Register'),
               ),
             ),
           ],
